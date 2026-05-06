@@ -1,0 +1,285 @@
+```html
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<title>GK साठी ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* container */
+.container {
+    text-align: center;
+    padding: 40px;
+}
+
+/* card */
+.card {
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    line-height: 1.8em;
+    font-size: 1.2em;
+    text-align: left;
+}
+
+/* buttons */
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* hidden */
+.hidden { display: none; }
+
+/* hearts */
+.hearts span {
+    position: fixed;
+    bottom: -50px;
+    color: #ff4d6d;
+    animation: float 6s linear infinite;
+}
+@keyframes float {
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* popup */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1a1a2e;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    display: none;
+}
+
+/* surprise boxes */
+.surprise-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.box {
+    padding: 15px 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.box:hover {
+    transform: scale(1.1);
+    background: #ff4d6d;
+}
+
+/* game */
+.game-area {
+    height: 200px;
+    position: relative;
+}
+#heartGame {
+    font-size: 40px;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+/* funny no btn */
+#noBtn {
+    position: relative;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Hey GK ❤️</h1>
+    <button onclick="start()">🎁 Click for Surprise</button>
+
+    <div id="card" class="card hidden">
+        <div id="text"></div>
+
+        <!-- surprise boxes -->
+        <div class="surprise-container">
+            <div class="box" onclick="openBox(1)">🎁</div>
+            <div class="box" onclick="openBox(2)">💖</div>
+            <div class="box" onclick="openBox(3)">✨</div>
+        </div>
+
+        <button onclick="startGame()">👉 पुढे क्लिक कर</button>
+    </div>
+</div>
+
+<div class="hearts"></div>
+
+<!-- popup for boxes -->
+<div id="boxContent" class="popup"></div>
+
+<!-- game -->
+<div id="gameArea" class="popup">
+    <p>💖 हे heart पकड!</p>
+    <div id="heartGame" onclick="winGame()">❤️</div>
+</div>
+
+<!-- password -->
+<div id="passwordBox" class="popup">
+    <p>🔐 पासवर्ड टाक (hint: gk)</p>
+    <input type="text" id="pass">
+    <button onclick="checkPass()">Unlock</button>
+</div>
+
+<!-- love question -->
+<div id="loveQuestion" class="popup">
+    <p>😳 तुला मी आवडतो/आवडते का?</p>
+    <button onclick="yesLove()">हो 😍</button>
+    <button id="noBtn" onmouseover="moveNo()">नाही 😜</button>
+</div>
+
+<audio id="music" loop>
+    <source src="https://www2.cs.uic.edu/~i101/SoundFiles/PinkPanther30.wav">
+</audio>
+
+<script>
+// message
+const message = `कधी कधी आयुष्यात एखादी व्यक्ती अशी भेटते…
+जिच्याशी बोलताना सगळं काही खूप सहज वाटतं.
+
+नाटक नाही, दिखावा नाही…
+फक्त खरं असलेलं एक नातं.
+
+तू तसाच आहेस GK…
+
+सुरुवात साध्या मैत्रीने झाली,
+पण कधी कधी मनाला असं वाटतं—
+ही मैत्री थोडी जास्तच खास आहे.
+
+तुझ्याशी बोलताना वेळ थांबावा असं वाटतं,
+आणि बोलणं संपलं की पुन्हा कधी बोलू याची वाट पाहावीशी वाटते…
+
+तू हसवतोस तेव्हा खरंच हसू येतं,
+आणि तू शांत असलास की नकळत तुझी काळजी वाटते…
+
+हे सगळं का होतं माहीत नाही,
+पण इतकं नक्की—
+तू माझ्यासाठी फक्त "friend" राहिलेला नाहीस.
+
+मला तू आवडतोस… ❤️
+
+पण त्या आवडण्यातही एक वेगळीच शांतता आहे,
+कारण तुझ्याशी असलेली ही friendship
+माझ्यासाठी खूपच precious आहे.
+
+म्हणून काहीही झालं तरी…
+आपण असंच बोलत राहू, हसत राहू,
+आणि एकमेकांसाठी special राहू…
+
+कारण तुझं माझ्या आयुष्यात असणं—
+हेच माझ्यासाठी सगळ्यात सुंदर feeling आहे. ✨`;
+
+let i = 0;
+
+// start
+function start() {
+    document.querySelector("button").style.display = "none";
+    document.getElementById("card").classList.remove("hidden");
+    document.getElementById("music").play();
+    typeWriter();
+    createHearts();
+}
+
+// typing
+function typeWriter() {
+    if (i < message.length) {
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        window.scrollTo(0, document.body.scrollHeight);
+        setTimeout(typeWriter, 35);
+    }
+}
+
+// hearts
+function createHearts() {
+    setInterval(() => {
+        let h = document.createElement("span");
+        h.innerHTML = "❤";
+        h.style.left = Math.random()*100+"vw";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),6000);
+    },300);
+}
+
+// surprise boxes
+function openBox(num) {
+    let msg = "";
+    if(num==1) msg="😊 तुझ्याशी बोलणं म्हणजे माझ्या दिवसाचा best part आहे.";
+    if(num==2) msg="💖 तू फक्त friend नाहीस… तू खूप special आहेस.";
+    if(num==3) msg="❤️ खरं सांगायचं तर… मला तू खूप आवडतोस.";
+
+    let box = document.getElementById("boxContent");
+    box.innerHTML = "<p>"+msg+"</p><br><button onclick='closeBox()'>Close</button>";
+    box.style.display = "block";
+}
+function closeBox() {
+    document.getElementById("boxContent").style.display = "none";
+}
+
+// game start
+function startGame() {
+    document.getElementById("gameArea").style.display="block";
+}
+
+// win game
+function winGame() {
+    document.getElementById("gameArea").style.display="none";
+    document.getElementById("passwordBox").style.display="block";
+}
+
+// password
+function checkPass() {
+    let p = document.getElementById("pass").value.toLowerCase();
+    if(p==="gk"){
+        document.getElementById("passwordBox").style.display="none";
+        document.getElementById("loveQuestion").style.display="block";
+    } else {
+        alert("😝 चुकीचा password!");
+    }
+}
+
+// funny no
+function moveNo() {
+    let btn=document.getElementById("noBtn");
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*80+"%";
+    btn.style.top=Math.random()*80+"%";
+}
+
+// yes
+function yesLove() {
+    alert("❤️ मला माहित होतं 😍");
+}
+</script>
+
+</body>
+</html>
+```
